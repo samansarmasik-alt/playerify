@@ -1,0 +1,25 @@
+[package]
+name = "playerify"
+version = "0.1.0"
+edition = "2021"
+description = "Playerify — reklamsız, mekânsal dinleme odası"
+license = "MIT"
+
+[dependencies]
+axum = { version = "0.8", default-features = false, features = ["http1", "tokio", "json", "query"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "signal"] }
+reqwest = { version = "0.12", default-features = false, features = ["native-tls", "json", "stream"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rust-embed = { version = "8", features = ["mime-guess"] }
+mime_guess = "2"
+url = "2"
+tao = "0.37.2"
+wry = "0.57.1"
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

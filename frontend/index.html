@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="tr" data-motion="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111013">
+  <meta name="description" content="Playerify — reklamsız, mekânsal dinleme odası. Gerçek katalog, 8D motoru, stüdyo zinciri.">
+  <title>playerify — dinleme odası</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230d0a16'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%23ffffff' stroke-opacity='.26' stroke-width='1.4'/%3E%3Ccircle cx='16' cy='16' r='5.5' fill='none' stroke='%23ffffff' stroke-opacity='.46' stroke-width='1.2'/%3E%3Ccircle cx='16' cy='16' r='2.3' fill='%23ff4fd8'/%3E%3Cpath d='M16 6a10 10 0 0 1 8.6 4.9' fill='none' stroke='%23ff4fd8' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/shell.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/views.css">
+  <link rel="stylesheet" href="/css/refresh.css">
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" width="0" height="0">
+    <defs>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.6v12.8c0 .7.8 1.1 1.4.7l9.2-6.4c.5-.3.5-1.1 0-1.4L9.4 4.9C8.8 4.5 8 4.9 8 5.6Z" fill="currentColor"/></symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24"><rect x="7" y="5" width="3.6" height="14" rx="1.2" fill="currentColor"/><rect x="13.4" y="5" width="3.6" height="14" rx="1.2" fill="currentColor"/></symbol>
+      <symbol id="i-prev" viewBox="0 0 24 24"><path d="M6.5 5.5v13" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M19 6.6v10.8c0 .7-.8 1.1-1.3.6l-7.4-5.4a.8.8 0 0 1 0-1.2l7.4-5.4c.5-.5 1.3-.1 1.3.6Z" fill="currentColor"/></symbol>
+      <symbol id="i-next" viewBox="0 0 24 24"><path d="M17.5 5.5v13" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M5 6.6v10.8c0 .7.8 1.1 1.3.6l7.4-5.4a.8.8 0 0 0 0-1.2L6.3 6c-.5-.5-1.3-.1-1.3.6Z" fill="currentColor"/></symbol>
+      <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M3 7h3.2c4.7 0 6.4 10 11.3 10H21"/><path d="m18 14 3 3-3 3"/><path d="M3 17h3.2c1.6 0 2.8-1.1 3.9-2.6"/><path d="M13.9 9.2C14.8 8 15.8 7 17.5 7H21"/><path d="m18 4 3 3-3 3"/></symbol>
+      <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M17 3.6 20.4 7 17 10.4"/><path d="M3.6 12V10a3 3 0 0 1 3-3h13.8"/><path d="M7 20.4 3.6 17 7 13.6"/><path d="M20.4 12v2a3 3 0 0 1-3 3H3.6"/></symbol>
+      <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.1S4.6 15.9 4.6 10.6a4 4 0 0 1 7.4-2.2 4 4 0 0 1 7.4 2.2c0 5.3-7.4 9.5-7.4 9.5Z"/></symbol>
+      <symbol id="i-heart-fill" viewBox="0 0 24 24"><path d="M12 20.1S4.6 15.9 4.6 10.6a4 4 0 0 1 7.4-2.2 4 4 0 0 1 7.4 2.2c0 5.3-7.4 9.5-7.4 9.5Z" fill="currentColor"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-queue" viewBox="0 0 24 24"><path d="M4 7h11M4 12h11M4 17h6"/><path d="M19 8.5v7.2c0 .5-.5.8-.9.5l-2.8-2"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m15.6 15.6 4 4"/></symbol>
+      <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><path d="m15.2 8.8-1.7 4.7-4.7 1.7 1.7-4.7 4.7-1.7Z"/></symbol>
+      <symbol id="i-library" viewBox="0 0 24 24"><path d="M4.5 5.5v13M9.5 5.5v13"/><path d="m14 6 4.4 12.4"/><path d="M4.5 8.5h5M4.5 15.5h5"/></symbol>
+      <symbol id="i-link" viewBox="0 0 24 24"><path d="M10.5 13.5a4.2 4.2 0 0 0 6 0l2.2-2.2a4.2 4.2 0 0 0-6-6l-1.2 1.2"/><path d="M13.5 10.5a4.2 4.2 0 0 0-6 0l-2.2 2.2a4.2 4.2 0 0 0 6 6l1.2-1.2"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+      <symbol id="i-more" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="18" cy="12" r="1.4" fill="currentColor"/></symbol>
+      <symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 9.5h3.2L12 5.8v12.4L7.2 14.5H4z"/><path d="M15.6 9a4.4 4.4 0 0 1 0 6"/><path d="M18.3 6.6a7.8 7.8 0 0 1 0 10.8"/></symbol>
+      <symbol id="i-volume-x" viewBox="0 0 24 24"><path d="M4 9.5h3.2L12 5.8v12.4L7.2 14.5H4z"/><path d="m16 10 4 4M20 10l-4 4"/></symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3.5c.7 4.4 2.6 6.3 7 7-4.4.7-6.3 2.6-7 7-.7-4.4-2.6-6.3-7-7 4.4-.7 6.3-2.6 7-7Z"/><path d="M18.5 15.5c.3 1.9 1.1 2.7 3 3-1.9.3-2.7 1.1-3 3-.3-1.9-1.1-2.7-3-3 1.9-.3 2.7-1.1 3-3Z"/></symbol>
+      <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M5 4v6M5 14v6M12 4v3M12 11v9M19 4v10M19 18v2"/><circle cx="5" cy="12" r="2"/><circle cx="12" cy="9" r="2"/><circle cx="19" cy="16" r="2"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.6V12l3 1.8"/></symbol>
+      <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2"/><path d="M3.8 19c.4-3.1 2.5-5 5.2-5s4.8 1.9 5.2 5"/><path d="M15.4 5.6a3.2 3.2 0 0 1 0 5.8M17.2 14.2c1.8.5 2.8 2.2 3 4.8"/></symbol>
+      <symbol id="i-disc" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="2.2"/><path d="M12 3.6a8.4 8.4 0 0 1 8.4 8.4" opacity=".4"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></symbol>
+      <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 4 19V8a1.5 1.5 0 0 1 1.5-1.5H11"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V5.2c0-.7.5-1.2 1.2-1.2h2.6c.7 0 1.2.5 1.2 1.2V7"/><path d="M6.5 7l.8 12a1.5 1.5 0 0 0 1.5 1.4h6.4a1.5 1.5 0 0 0 1.5-1.4l.8-12"/><path d="M10 11v6M14 11v6"/></symbol>
+      <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5a7.7 7.7 0 0 0 0-3l1.5-1.2-1.9-3.3-1.8.7a7.6 7.6 0 0 0-2.6-1.5L14.2 3h-3.8l-.4 2.2a7.6 7.6 0 0 0-2.6 1.5l-1.8-.7-1.9 3.3 1.5 1.2a7.7 7.7 0 0 0 0 3l-1.5 1.2 1.9 3.3 1.8-.7a7.6 7.6 0 0 0 2.6 1.5l.4 2.2h3.8l.4-2.2a7.6 7.6 0 0 0 2.6-1.5l1.8.7 1.9-3.3-1.5-1.2Z"/></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-6"/></symbol>
+      <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 12h2l1.6-5 2.4 10 2-7 2 4 1.6-2H21"/></symbol>
+      <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M4.5 13v-1a7.5 7.5 0 0 1 15 0v1"/><path d="M4.5 13.5a2.5 2.5 0 0 1 2.5 2.5v2a2.5 2.5 0 0 1-5 0v-2a2.5 2.5 0 0 1 2.5-2.5ZM19.5 13.5a2.5 2.5 0 0 1 2.5 2.5v2a2.5 2.5 0 0 1-5 0v-2a2.5 2.5 0 0 1 2.5-2.5Z"/></symbol>
+    </defs>
+  </svg>
+
+  <div class="ambient" aria-hidden="true">
+    <div class="ambient__wash"></div>
+    <div class="ambient__grain"></div>
+  </div>
+
+  <div class="netbanner" id="netBanner" hidden>Bağlantı yok. Katalog yanıt vermiyor.</div>
+
+  <a class="skip-link" href="#main">İçeriğe geç</a>
+
+  <header class="topnav" aria-label="Üst gezinme">
+    <a class="topnav__brand" href="#/discover" aria-label="playerify ana sayfa">
+      <span class="topnav__mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="28" height="28">
+          <circle cx="16" cy="16" r="12.2" fill="none" stroke="currentColor" stroke-opacity=".22" stroke-width="1.2"/>
+          <circle cx="16" cy="16" r="7.4" fill="none" stroke="currentColor" stroke-opacity=".42" stroke-width="1.2"/>
+          <path d="M16 3.8a12.2 12.2 0 0 1 10.5 6" fill="none" stroke="var(--ember)" stroke-width="1.7" stroke-linecap="round"/>
+          <circle cx="16" cy="16" r="2.5" fill="var(--ember)"/>
+        </svg>
+      </span>
+      <span class="topnav__word">playerify</span>
+    </a>
+    <nav class="topnav__links" aria-label="Ana gezinme">
+      <a data-nav="discover" href="#/discover">Keşfet</a>
+      <a data-nav="search" href="#/search">Ara</a>
+      <a data-nav="library" href="#/library">Kitaplık</a>
+      <a data-nav="liked" href="#/liked">Beğenilenler</a>
+    </nav>
+    <div class="topnav__actions">
+      <button class="topnav__search" data-act="open-search" aria-label="Ara">
+        <svg class="i"><use href="#i-search"/></svg><span>Parça, sanatçı, liste</span><kbd>Ctrl K</kbd>
+      </button>
+      <button class="iconbtn" data-act="toggle-inspector" aria-label="Sinyal paneli"><svg class="i"><use href="#i-spark"/></svg></button>
+      <button class="iconbtn" data-act="open-settings" aria-label="Ayarlar"><svg class="i"><use href="#i-gear"/></svg></button>
+    </div>
+  </header>
+
+  <div class="app" id="app">
+    <aside class="rail" aria-label="Kenar çubuğu">
+      <a class="brand" href="#/discover" aria-label="Playerify ana sayfa">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="30" height="30">
+            <circle cx="16" cy="16" r="12.2" fill="none" stroke="currentColor" stroke-opacity=".22" stroke-width="1.2"/>
+            <circle cx="16" cy="16" r="7.4" fill="none" stroke="currentColor" stroke-opacity=".42" stroke-width="1.2"/>
+            <path d="M16 3.8a12.2 12.2 0 0 1 10.5 6" fill="none" stroke="var(--ember)" stroke-width="1.7" stroke-linecap="round"/>
+            <circle cx="16" cy="16" r="2.5" fill="var(--ember)"/>
+          </svg>
+        </span>
+        <span class="brand__word">playerify</span>
+      </a>
+
+      <nav class="rail__nav" aria-label="Ana gezinme">
+        <a class="navlink" data-nav="discover" href="#/discover"><svg class="i"><use href="#i-compass"/></svg><span>Keşfet</span></a>
+        <a class="navlink" data-nav="search" href="#/search"><svg class="i"><use href="#i-search"/></svg><span>Ara</span></a>
+        <a class="navlink" data-nav="library" href="#/library"><svg class="i"><use href="#i-library"/></svg><span>Kitaplık</span></a>
+        <a class="navlink" data-nav="liked" href="#/liked"><svg class="i"><use href="#i-heart"/></svg><span>Beğenilenler</span></a>
+      </nav>
+
+      <div class="rail__rule"></div>
+      <p class="rail__label">Atölye</p>
+      <div class="rail__tools">
+        <button class="tool" data-act="preset-quick" data-preset="smart"><svg class="i"><use href="#i-spark"/></svg><span>Ses motoru</span><em id="railPreset">Akıllı</em></button>
+        <button class="tool" data-act="toggle-verified" id="railVerified"><svg class="i"><use href="#i-check"/></svg><span>Doğrulanmış</span><em>kapalı</em></button>
+        <button class="tool" data-act="open-settings"><svg class="i"><use href="#i-sliders"/></svg><span>Ayarlar</span></button>
+      </div>
+
+      <div class="rail__foot">
+        <span class="quality" title="Audius kaynaklı yüksek bit hızlı akış, 48 kHz float stüdyo zinciri"><i></i>HQ akış</span>
+        <button class="iconbtn" data-act="open-settings" aria-label="Ayarlar"><svg class="i"><use href="#i-gear"/></svg></button>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar__where">
+          <span class="eyebrow" id="viewKicker">KATALOG</span>
+          <h1 id="viewTitle">Keşfet</h1>
+        </div>
+        <div class="topbar__tools">
+          <button class="searchlaunch" data-act="open-search" aria-label="Ara">
+            <svg class="i"><use href="#i-search"/></svg>
+            <span>Parça, sanatçı, liste</span>
+            <kbd>Ctrl K</kbd>
+          </button>
+          <button class="chip chip--toggle" data-act="toggle-verified" id="verifiedChip" aria-pressed="false">
+            <svg class="i"><use href="#i-check"/></svg>Doğrulanmış
+          </button>
+          <button class="iconbtn only-narrow" data-act="toggle-inspector" aria-label="Sinyal paneli"><svg class="i"><use href="#i-spark"/></svg></button>
+        </div>
+      </header>
+
+      <main class="view" id="main" tabindex="-1"></main>
+    </div>
+
+    <aside class="inspector" id="inspector" aria-label="Sinyal ve kuyruk">
+      <div class="inspector__head">
+        <div class="tabs" role="tablist" aria-label="Denetçi sekmeleri">
+          <button class="tab" role="tab" aria-selected="true" data-act="inspector-tab" data-tab="signal">Sinyal</button>
+          <button class="tab" role="tab" aria-selected="false" data-act="inspector-tab" data-tab="queue">Kuyruk <span class="tab__count" id="queueCount">0</span></button>
+          <button class="tab" role="tab" aria-selected="false" data-act="inspector-tab" data-tab="info">Bilgi</button>
+        </div>
+        <button class="iconbtn inspector__close" data-act="toggle-inspector" aria-label="Paneli kapat"><svg class="i"><use href="#i-x"/></svg></button>
+      </div>
+
+      <div class="inspector__body">
+        <section class="ipanel" data-panel="signal">
+          <div class="orbitbox">
+            <div class="orbit" id="orbit">
+              <canvas id="orbitCanvas" aria-hidden="true"></canvas>
+              <div class="orbit__art"><img id="orbitArt" alt="" loading="lazy"></div>
+              <span class="orbit__tag" id="orbitTag">motor kapalı</span>
+            </div>
+            <div class="meter" aria-label="Çıkış seviyesi">
+              <div class="meter__row"><span>L</span><div class="meter__track"><i id="meterL"></i></div></div>
+              <div class="meter__row"><span>R</span><div class="meter__track"><i id="meterR"></i></div></div>
+              <div class="meter__db mono" id="meterDb">−∞</div>
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="block__head"><span class="eyebrow">Motor</span><span class="mono block__value" id="presetReadout">Akıllı</span></div>
+            <div class="presets" role="group" aria-label="Ses motoru">
+              <button class="chip" data-act="preset" data-preset="smart">Akıllı</button>
+              <button class="chip" data-act="preset" data-preset="8d">8D</button>
+              <button class="chip" data-act="preset" data-preset="orbit">Yörünge</button>
+              <button class="chip" data-act="preset" data-preset="night">Gece</button>
+              <button class="chip" data-act="preset" data-preset="bass">Bas</button>
+              <button class="chip" data-act="preset" data-preset="off">Kapalı</button>
+            </div>
+            <p class="smartline" id="smartLine">Bas merkezde · akıllı yörünge</p>
+          </div>
+
+          <div class="block">
+            <div class="block__head"><span class="eyebrow">Uzam</span><span class="mono block__value" id="spaceReadout">85 · 0.09 · 34</span></div>
+            <div class="sliders">
+              <label class="slider">
+                <span>Derinlik</span><output id="depthOut" for="depth">85</output>
+                <input id="depth" data-param="depth" type="range" min="0" max="100" step="1" value="85">
+              </label>
+              <label class="slider">
+                <span>Tur hızı</span><output id="speedOut" for="speed">0.09</output>
+                <input id="speed" data-param="speed" type="range" min="20" max="220" step="1" value="85">
+              </label>
+              <label class="slider">
+                <span>Oda</span><output id="roomOut" for="room">34</output>
+                <input id="room" data-param="room" type="range" min="0" max="100" step="1" value="34">
+              </label>
+            </div>
+            <label class="switchrow">
+              <span>Otomatik seviye <small>Parçalar arası ses farkını yumuşatır</small></span>
+              <input id="autolevel" type="checkbox" checked>
+              <i aria-hidden="true"></i>
+            </label>
+          </div>
+
+          <div class="block">
+            <div class="block__head"><span class="eyebrow">Eşitleyici</span><button class="linkbtn" data-act="eq-reset">Düzle</button></div>
+            <div class="eq" id="eqBank"></div>
+            <div class="eq__scale" aria-hidden="true"><span>+9</span><span>0</span><span>−9</span></div>
+          </div>
+        </section>
+
+        <section class="ipanel" data-panel="queue" hidden>
+          <div class="block__head"><span class="eyebrow">Sırada</span><button class="linkbtn" data-act="clear-queue">Temizle</button></div>
+          <ol class="queue" id="queueList"></ol>
+        </section>
+
+        <section class="ipanel" data-panel="info" hidden>
+          <div id="infoPanel"></div>
+        </section>
+      </div>
+    </aside>
+  </div>
+
+  <div class="focusmode" id="focusMode" hidden>
+    <img class="focusmode__bg" id="focusBg" alt="">
+    <div class="focusmode__veil" aria-hidden="true"></div>
+    <div class="focusmode__top">
+      <span class="focusmode__brand"><span class="focusmode__dot"></span>playerify · şimdi çalıyor</span>
+      <div class="focusmode__top-actions">
+        <button class="btn btn--ghost btn--sm" data-act="focus-queue"><svg class="i"><use href="#i-queue"/></svg> Kuyruk</button>
+        <button class="iconbtn" data-act="toggle-focus" aria-label="Sahneyi kapat"><svg class="i"><use href="#i-x"/></svg></button>
+      </div>
+    </div>
+    <div class="focusmode__stage">
+      <div class="focusmode__disc">
+        <img id="focusArt" alt="">
+        <span class="focusmode__grooves" aria-hidden="true"></span>
+        <span class="focusmode__hole" aria-hidden="true"></span>
+      </div>
+      <div class="focusmode__meta">
+        <span class="eyebrow">ŞİMDİ ÇALIYOR</span>
+        <h2 class="focusmode__title" id="focusTitle">Bir parça seç</h2>
+        <p class="focusmode__artist" id="focusArtist">Katalogdan bir şey çal</p>
+        <div class="focusmode__presets" role="group" aria-label="Ses motoru">
+          <button class="chip" data-act="preset" data-preset="smart">Akıllı</button>
+          <button class="chip" data-act="preset" data-preset="8d">8D</button>
+          <button class="chip" data-act="preset" data-preset="orbit">Yörünge</button>
+          <button class="chip" data-act="preset" data-preset="night">Gece</button>
+          <button class="chip" data-act="preset" data-preset="bass">Bas</button>
+          <button class="chip" data-act="preset" data-preset="off">Kapalı</button>
+        </div>
+        <div class="focusmode__controls">
+          <button class="iconbtn" data-act="prev" aria-label="Önceki parça"><svg class="i"><use href="#i-prev"/></svg></button>
+          <button class="playbtn playbtn--focus" data-act="toggle-play" aria-label="Oynat">
+            <svg class="i playbtn__play"><use href="#i-play"/></svg>
+            <svg class="i playbtn__pause"><use href="#i-pause"/></svg>
+          </button>
+          <button class="iconbtn" data-act="next" aria-label="Sonraki parça"><svg class="i"><use href="#i-next"/></svg></button>
+        </div>
+        <div class="focusmode__actions">
+          <button class="btn btn--glass btn--sm focuslike" data-act="toggle-like" id="focusLike" aria-label="Beğen" aria-pressed="false">
+            <svg class="i"><use href="#i-heart"/></svg> Beğen
+          </button>
+          <button class="btn btn--ghost btn--sm" data-act="toggle-focus">Kapat</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="transport" aria-label="Çalar">
+    <div class="transport__now">
+      <button class="nowart" data-act="toggle-focus" aria-label="Şimdi çalıyor sahnesini aç">
+        <img id="nowArt" alt="" width="56" height="56">
+        <span class="nowart__empty"><svg class="i"><use href="#i-disc"/></svg></span>
+        <span class="nowart__pulse" aria-hidden="true"></span>
+      </button>
+      <div class="nowmeta">
+        <div class="nowmeta__title" id="nowTitle">Henüz bir parça yok</div>
+        <div class="nowmeta__artist" id="nowArtist">Katalogdan bir şey seç</div>
+      </div>
+      <span class="eqmini" aria-hidden="true"><i></i><i></i><i></i></span>
+      <button class="iconbtn iconbtn--like" data-act="toggle-like" id="nowLike" aria-label="Beğen" aria-pressed="false">
+        <svg class="i"><use href="#i-heart"/></svg>
+      </button>
+    </div>
+
+    <div class="transport__center">
+      <div class="controls">
+        <button class="iconbtn" data-act="shuffle" id="shuffleBtn" aria-label="Karıştır" aria-pressed="false"><svg class="i"><use href="#i-shuffle"/></svg></button>
+        <button class="iconbtn" data-act="prev" aria-label="Önceki parça"><svg class="i"><use href="#i-prev"/></svg></button>
+        <button class="playbtn" data-act="toggle-play" id="playBtn" aria-label="Oynat">
+          <svg class="i playbtn__play"><use href="#i-play"/></svg>
+          <svg class="i playbtn__pause"><use href="#i-pause"/></svg>
+        </button>
+        <button class="iconbtn" data-act="next" aria-label="Sonraki parça"><svg class="i"><use href="#i-next"/></svg></button>
+        <button class="iconbtn repeatbtn" data-act="cycle-repeat" id="repeatBtn" aria-label="Tekrar kapalı" aria-pressed="false"><svg class="i"><use href="#i-repeat"/></svg><i class="repeatbtn__one">1</i></button>
+      </div>
+      <div class="seekrow">
+        <span class="mono" id="timeNow">0:00</span>
+        <div class="seek">
+          <div class="seek__rail" aria-hidden="true"><i class="seek__buffer" id="seekBuffer"></i><i class="seek__fill" id="seekFill"></i></div>
+          <input id="seek" type="range" min="0" max="1000" step="1" value="0" aria-label="Parça konumu">
+        </div>
+        <span class="mono" id="timeTotal">0:00</span>
+      </div>
+    </div>
+
+    <div class="transport__right">
+      <span class="hqbadge" id="qualityBadge" title="Kaynak: Audius yüksek bit hızlı akış. Zincir: 48 kHz float, HRTF, konvolüsyon, limiter.">HQ</span>
+      <button class="iconbtn" data-act="toggle-inspector" aria-label="Sinyal panelini aç"><svg class="i"><use href="#i-spark"/></svg></button>
+      <div class="vol">
+        <button class="iconbtn" data-act="toggle-mute" id="muteBtn" aria-label="Sesi kapat"><svg class="i"><use href="#i-volume"/></svg></button>
+        <input id="volume" type="range" min="0" max="100" step="1" value="80" aria-label="Ses düzeyi">
+      </div>
+    </div>
+  </footer>
+
+  <nav class="mobilenav" aria-label="Mobil gezinme">
+    <a data-nav="discover" href="#/discover"><svg class="i"><use href="#i-compass"/></svg><span>Keşfet</span></a>
+    <a data-nav="search" href="#/search"><svg class="i"><use href="#i-search"/></svg><span>Ara</span></a>
+    <a data-nav="library" href="#/library"><svg class="i"><use href="#i-library"/></svg><span>Kitaplık</span></a>
+    <a data-nav="liked" href="#/liked"><svg class="i"><use href="#i-heart"/></svg><span>Beğeni</span></a>
+    <button data-act="toggle-inspector"><svg class="i"><use href="#i-spark"/></svg><span>Sinyal</span></button>
+  </nav>
+
+  <div class="scrim" id="scrim" hidden></div>
+  <div id="overlayRoot"></div>
+  <div class="toasts" id="toastRoot" role="status" aria-live="polite"></div>
+
+  <input id="fileInput" type="file" accept="audio/*,.flac,.wav,.ogg,.opus,.m4a" multiple hidden>
+  <audio id="deckA" crossorigin="anonymous" preload="auto"></audio>
+  <audio id="deckB" crossorigin="anonymous" preload="auto"></audio>
+
+  <noscript><p class="noscript">Playerify ses motoru için JavaScript'e ihtiyaç duyar.</p></noscript>
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>
